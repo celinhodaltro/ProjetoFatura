@@ -1,5 +1,5 @@
-using Interface.App.Models;
 using Microsoft.AspNetCore.Mvc;
+using Server.Entities.Model;
 using System.Diagnostics;
 
 namespace Interface.App.Controllers

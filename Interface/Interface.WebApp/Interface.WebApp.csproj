@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Server\Server.BusinessLayer\Server.BusinessLayer.csproj" />
+    <ProjectReference Include="..\..\Server\Server.Entities\Server.Entities.csproj" />
   </ItemGroup>
 
 </Project>
