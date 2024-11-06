@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.Entities;
 namespace TesteDengine;
 
 public class AppContext: DbContext
 {
-    public AppContext(DbContextOptions<DbExercicio4> options)
+    public AppContext(DbContextOptions<AppContext> options)
         : base(options)
     {
 
