@@ -4,10 +4,10 @@
 using Microsoft.EntityFrameworkCore;
 using Server.DataAcessObject;
 using Server.Entities;
+using Server.DataAcessObject.Providers;
 
 using (var context = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>().Options))
 {
-
 
     // Criando uma fatura de teste
     var newfatura = new Fatura
@@ -41,6 +41,11 @@ using (var context = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>(
     }
     };
 
+
+
+    var provider = new BaseProvider<Fatura>(context);
+    provider.Insert(newfatura);
+
     context.Fatura.Add(newfatura);
     context.SaveChanges();
 
@@ -53,5 +58,7 @@ using (var context = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>(
     {
         Console.WriteLine($" - Item {item.Ordem}: {item.Valor:C}");
     }
+
+
 
 }
