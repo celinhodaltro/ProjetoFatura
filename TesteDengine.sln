@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Interface", "Interface", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Interface.WebApp", "Interface\Interface.WebApp\Interface.WebApp.csproj", "{6DD15254-D82B-44EE-87F0-7E2AA12E1A53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Test", "Server.Test\Server.Test.csproj", "{5D3E3434-89D2-40E1-B6EF-D4D1C7D7DB61}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,10 +37,6 @@ Global
 		{6DD15254-D82B-44EE-87F0-7E2AA12E1A53}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DD15254-D82B-44EE-87F0-7E2AA12E1A53}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6DD15254-D82B-44EE-87F0-7E2AA12E1A53}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5D3E3434-89D2-40E1-B6EF-D4D1C7D7DB61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5D3E3434-89D2-40E1-B6EF-D4D1C7D7DB61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5D3E3434-89D2-40E1-B6EF-D4D1C7D7DB61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5D3E3434-89D2-40E1-B6EF-D4D1C7D7DB61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +46,6 @@ Global
 		{4030388C-3EE2-44E7-823B-EEACBD723EE0} = {525598CB-EDCC-4BF3-8775-7F715D96A682}
 		{63F6D223-E815-4E7F-B0C2-E304B25CA302} = {525598CB-EDCC-4BF3-8775-7F715D96A682}
 		{6DD15254-D82B-44EE-87F0-7E2AA12E1A53} = {6E356925-40EB-485D-A667-A5A9AC4CD50C}
-		{5D3E3434-89D2-40E1-B6EF-D4D1C7D7DB61} = {525598CB-EDCC-4BF3-8775-7F715D96A682}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3D415C2A-5A1F-48A6-A2CD-879AB33A2086}
