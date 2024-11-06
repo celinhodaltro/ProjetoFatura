@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using TesteDengine;
-
 public class ConsoleServiceProvider
 {
     private readonly ServiceProvider _serviceProvider;
