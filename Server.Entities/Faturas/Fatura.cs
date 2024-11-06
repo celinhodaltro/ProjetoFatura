@@ -1,5 +1,4 @@
-﻿namespace TesteDengine;
-
+﻿namespace Server.Entities;
 public class Fatura
 {
     public int FaturaId { get; set; }
