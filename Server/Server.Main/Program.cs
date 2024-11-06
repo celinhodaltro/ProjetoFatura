@@ -1,4 +1,4 @@
-﻿//var db = ConsoleServiceProvider.Instance.CreateDbExercicio4();
+﻿
 
 
 using Microsoft.EntityFrameworkCore;
