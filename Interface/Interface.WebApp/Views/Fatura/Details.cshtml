@@ -1,0 +1,45 @@
+﻿@model Fatura
+
+@{
+    ViewData["Title"] = "Detalhes da Fatura";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Detalhes da Fatura</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3">Cliente</dt>
+        <dd class="col-sm-9">@Model.Cliente</dd>
+
+        <dt class="col-sm-3">Data</dt>
+        <dd class="col-sm-9">@Model.Data.ToShortDateString()</dd>
+    </dl>
+
+    <h4>Itens da Fatura</h4>
+    <a href="/FaturaItem/Create?faturaId=@Model.Id" class="btn btn-primary mb-3">Adicionar Item</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ordem</th>
+                <th>Descrição</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.FaturaItem)
+            {
+                <tr>
+                    <td>@item.Ordem</td>
+                    <td>@item.Descricao</td>
+                    <td>@item.Valor.ToString("C")</td>
+                    <td>
+                        <a href="/FaturaItem/Edit/@item.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="/FaturaItem/Delete/@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

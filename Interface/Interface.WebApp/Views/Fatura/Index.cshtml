@@ -1,8 +1,37 @@
-﻿@{
-    ViewData["Title"] = "Pagina de Fatura";
+﻿@model IEnumerable<Fatura>
+
+@{
+    ViewData["Title"] = "Lista de Faturas";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-4">
+    <h2 class="text-center">Lista de Faturas</h2>
+    <a href="/Fatura/Create" class="btn btn-primary mb-3">Adicionar Nova Fatura</a>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fatura in Model)
+            {
+                <tr>
+                    <td>@fatura.Id</td>
+                    <td>@fatura.Cliente</td>
+                    <td>@fatura.Data.ToShortDateString()</td>
+                    <td>
+                        <a href="/Fatura/Details/@fatura.Id" class="btn btn-info btn-sm">Visualizar</a>
+                        <a href="/Fatura/Edit/@fatura.Id" class="btn btn-warning btn-sm">Editar</a>
+                        <a href="/Fatura/Delete/@fatura.Id" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+

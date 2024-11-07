@@ -1,0 +1,20 @@
+﻿@model Fatura
+
+@{
+    ViewData["Title"] = "Nova Fatura";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center">Criar Nova Fatura</h2>
+    
+    <form asp-action="Create" method="post">
+        <div class="form-group">
+            <label>Cliente</label>
+            <input asp-for="Cliente" class="form-control" placeholder="Nome do Cliente"/>
+            <span asp-validation-for="Cliente" class="text-danger"></span>
+        </div>
+        
+        <button type="submit" class="btn btn-success mt-3">Salvar</button>
+        <a href="/Fatura/Index" class="btn btn-secondary mt-3">Cancelar</a>
+    </form>
+</div>
