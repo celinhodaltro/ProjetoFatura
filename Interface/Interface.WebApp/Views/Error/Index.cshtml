@@ -3,12 +3,38 @@
     Layout = "_Layout"; // Se você tiver um layout.
 }
 
-<h2>Ocorreram os seguintes erros:</h2>
-<div style="color: red;">
-    @foreach (var error in Model.Errors)
-    {
-        <p>@error</p>
-    }
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Card para o título e lista de erros -->
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="card-title mb-0">Ocorreram os seguintes erros</h2>
+                </div>
+                <div class="card-body">
+                    @if (Model.Errors != null && Model.Errors.Any())
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var error in Model.Errors)
+                            {
+                                <li class="list-group-item text-danger">
+                                    <i class="bi bi-exclamation-triangle-fill text-danger me-2"></i> 
+                                    @error
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Nenhum erro encontrado.</p>
+                    }
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <a href="javascript:history.back()" class="btn btn-primary">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
-<br/>
-<a href="javascript:history.back()" class="btn btn-primary">Voltar</a>
