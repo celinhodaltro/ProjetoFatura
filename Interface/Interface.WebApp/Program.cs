@@ -2,6 +2,7 @@ using Server.BusinessLayer;
 using Server.DataAcessObject.Providers;
 using Server.Entities;
 using Interface.WebApp.Services;
+using OfficeOpenXml;
 internal class Program
 {
     private static void Main(string[] args)
@@ -11,6 +12,8 @@ internal class Program
         // Add services to the container.
         builder.Services.AddControllersWithViews();
         builder.Services.InjectServices();
+
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         var app = builder.Build();
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
