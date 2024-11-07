@@ -14,10 +14,31 @@ public class FaturaController : Controller
         _faturaBL = faturaBL;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(FaturaFilter filter)
     {
-        var faturas = await _faturaBL.BuscarFaturasComFiltros(new FaturaFilter { Page = 0, PageSize = 10 });
-        return View(faturas);
+        filter.Page = filter.Page > 0 ? filter.Page : 1;
+        filter.PageSize = filter.PageSize > 0 ? filter.PageSize : 10;
+
+        try
+        {
+            var faturas = await _faturaBL.BuscarFaturasComFiltros(filter);
+
+            var totalFaturas = await _faturaBL.CountFaturasComFiltros(filter);
+            var totalPages = (int)Math.Ceiling((double)totalFaturas / filter.PageSize);
+
+            var viewModel = new FaturasViewModel
+            {
+                Faturas = faturas,
+                Filter = filter,
+                TotalPages = totalPages
+            };
+
+            return View(viewModel);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
     }
     public async Task<IActionResult> Details(int id)
     {

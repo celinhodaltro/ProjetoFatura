@@ -57,6 +57,11 @@ namespace Server.BusinessLayer
                 return resultado;
         }
 
+        public async Task<int> CountFaturasComFiltros(FaturaFilter Filter)
+        {
+            return await _faturaProvider.CountFaturasComFiltros(Filter);
+        }
+
         public async Task ExcluirFatura(int faturaId)
         {
             var fatura = await _faturaProvider.Get(faturaId);

@@ -34,11 +34,33 @@ public class FaturaProvider : BaseProvider<Fatura>
         if (Filter.DateFinish.HasValue)
             query = query.Where(f => f.Data <= Filter.DateFinish.Value);
         
-        if (Filter is { Page:>0, PageSize:>0})
+        if (Filter is { PageSize:>0})
             query = query.Skip((Filter.Page - 1) * Filter.PageSize).Take(Filter.PageSize);
         
 
         return await query.ToListAsync();
+    }
+
+    public async Task<int> CountFaturasComFiltros(FaturaFilter filter)
+    {
+        var query = _context.Fatura.AsQueryable();
+
+        if (!string.IsNullOrEmpty(filter.Cliente))
+        {
+            query = query.Where(f => f.Cliente.Contains(filter.Cliente));
+        }
+
+        if (filter.DateInitial.HasValue)
+        {
+            query = query.Where(f => f.Data >= filter.DateInitial.Value);
+        }
+
+        if (filter.DateFinish.HasValue)
+        {
+            query = query.Where(f => f.Data <= filter.DateFinish.Value);
+        }
+
+        return await query.CountAsync();
     }
 
 }
