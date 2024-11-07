@@ -65,9 +65,29 @@ public class FaturaController : Controller
     {
         return View();
     }
-    public IActionResult CreateItem()
+    public IActionResult CreateItem(int faturaId)
     {
-        return View();
+        var faturaItem = new FaturaItem
+        {
+            FaturaId = faturaId
+        };
+
+        return View(faturaItem);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> CreateItem(FaturaItem faturaItem)
+    {
+        try
+        {
+            await _faturaBL.AdicionarFaturaItem(faturaItem);
+            return RedirectToAction("Details", "Fatura", new { id = faturaItem.FaturaId });
+        }
+        catch (Exception ex)
+        {
+            return RedirectToAction("Index", "Error", new ErrorModel(ex.Message));
+        }
     }
 
     [HttpPost]

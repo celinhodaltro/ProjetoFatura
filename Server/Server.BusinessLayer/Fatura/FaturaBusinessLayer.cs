@@ -21,7 +21,7 @@ namespace Server.BusinessLayer
 
         public async Task<Fatura> GetFaturaByIdAsync(int faturaId)
         {
-            return await _faturaProvider.Get(faturaId);
+            return await _faturaProvider.GetFaturaWithItens(faturaId);
         }
 
         public async Task UpdateFatura(Fatura fatura)
@@ -38,14 +38,10 @@ namespace Server.BusinessLayer
             await _faturaProvider.Insert(fatura);
         }
 
-        public async Task AdicionarFaturaItem(int faturaId, FaturaItem item)
+        public async Task AdicionarFaturaItem(FaturaItem item)
         {
-            var fatura = await _faturaProvider.GetFaturaWithItens(faturaId);
             item.Validate();
-
-
-            fatura.FaturaItem.Add(item);
-            await _faturaProvider.Update(fatura);
+            _faturaItemProvider.Insert(item);
         }
 
         public async Task<List<Fatura>> BuscarFaturasComFiltros(FaturaFilter Filter)
