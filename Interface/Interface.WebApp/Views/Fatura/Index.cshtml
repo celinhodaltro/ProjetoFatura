@@ -60,6 +60,17 @@
                 </tbody>
             </table>
 
+
+            <div class="text-center mt-5">
+                <h3 class="report-title">Relatórios</h3>
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="@Url.Action("RelatorioPorCliente", "Fatura", new { Cliente = Model.Filter.Cliente })" class="btn btn-success mx-2">Total por Cliente</a>
+                    <a href="@Url.Action("RelatorioPorAnoMes", "Fatura", new { DateInitial = Model.Filter.DateInitial, DateFinish = Model.Filter.DateFinish })" class="btn btn-success mx-2">Total por Ano/Mês</a>
+                    <a href="@Url.Action("Top10Faturas", "Fatura")" class="btn btn-success mx-2">Top 10 Faturas</a>
+                    <a href="@Url.Action("Top10Itens", "Fatura")" class="btn btn-success mx-2">Top 10 Maiores Itens</a>
+                </div>
+            </div>
+
             <nav aria-label="Page navigation" class="mt-4">
                 <ul class="pagination justify-content-center">
                     @for (var i = 1; i <= Model.TotalPages; i++)

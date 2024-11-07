@@ -42,10 +42,10 @@ namespace Server.BusinessLayer
         {
             var fatura = await _faturaProvider.GetFaturaWithItens(faturaId);
             item.Validate();
-            
+
 
             fatura.FaturaItem.Add(item);
-            await _faturaProvider.Update(fatura); 
+            await _faturaProvider.Update(fatura);
         }
 
         public async Task<List<Fatura>> BuscarFaturasComFiltros(FaturaFilter Filter)
@@ -75,6 +75,29 @@ namespace Server.BusinessLayer
             if (faturaItem != null)
                 await _faturaItemProvider.Delete(faturaItem);
         }
+
+        public async Task<IEnumerable<RelatorioCliente>> GerarRelatorioPorCliente(string cliente)
+        {
+            return await _faturaProvider.GerarRelatorioPorCliente(cliente);
+        }
+        public async Task<IEnumerable<RelatorioAnoMes>> GerarRelatorioPorAnoMes(DateTime? dateInitial, DateTime? dateFinish)
+        {
+            return await _faturaProvider.GerarRelatorioPorAnoMes(dateInitial, dateFinish);
+        }
+
+        public async Task<IEnumerable<Fatura>> GerarTop10Faturas()
+        {
+            return await _faturaProvider.GerarTop10Faturas();
+        }
+
+        public async Task<IEnumerable<FaturaItem>> GerarTop10Itens()
+        {
+            return await _faturaProvider.GerarTop10Itens();
+        }
+
+
+
+
 
 
     }
