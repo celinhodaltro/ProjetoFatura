@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 public class FaturaController : Controller
 {
     private readonly FaturaBusinessLayer _faturaBL;
+    private readonly RelatorioBusinessLayer _relatorioBL;
 
-    public FaturaController(FaturaBusinessLayer faturaBL)
+    public FaturaController(FaturaBusinessLayer faturaBL, RelatorioBusinessLayer relatorioBL)
     {
         _faturaBL = faturaBL;
+        _relatorioBL = relatorioBL;
     }
 
     public async Task<IActionResult> Index(FaturaFilter filter)
@@ -109,6 +111,66 @@ public class FaturaController : Controller
             return BadRequest(new { message = ex.Message });
         }
     }
+
+
+    public async Task<IActionResult> RelatorioPorCliente(string cliente)
+    {
+        try
+        {
+            var relatorio = await _faturaBL.GerarRelatorioPorCliente(cliente);
+            var file = _relatorioBL.GerarExcelRelatorioCliente(relatorio);
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Relatorio_Cliente.xlsx");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    public async Task<IActionResult> RelatorioPorAnoMes(DateTime? dateInitial, DateTime? dateFinish)
+    {
+        try
+        {
+            var relatorio = await _faturaBL.GerarRelatorioPorAnoMes(dateInitial, dateFinish);
+            var file = _relatorioBL.GerarExcelRelatorioAnoMes(relatorio);
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Relatorio_Ano_Mes.xlsx");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    public async Task<IActionResult> Top10Faturas()
+    {
+        try
+        {
+            var topFaturas = await _faturaBL.GerarTop10Faturas();
+            var file = _relatorioBL.GerarExcelTop10Faturas(topFaturas);
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Top10_Faturas.xlsx");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+
+    public async Task<IActionResult> Top10Itens()
+    {
+        try
+        {
+            var topItens = await _faturaBL.GerarTop10Itens();
+            var file = _relatorioBL.GerarExcelTop10Itens(topItens);
+            return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Top10_Itens.xlsx");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+    }
+}
+
+
 
 
 }
