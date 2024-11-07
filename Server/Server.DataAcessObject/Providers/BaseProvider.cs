@@ -43,6 +43,14 @@ public class BaseProvider<T> where T : class
         await _context.SaveChangesAsync();
     }
 
+    public async Task Update(T entity)
+    {
+        _dbSet.Attach(entity); 
+        _context.Entry(entity).State = EntityState.Modified; 
+        await _context.SaveChangesAsync(); 
+    }
+
+
     public async Task Delete(T entity)
     {
         _dbSet.Remove(entity);
