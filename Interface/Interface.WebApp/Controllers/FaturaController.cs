@@ -19,13 +19,22 @@ public class FaturaController : Controller
         var faturas = await _faturaBL.BuscarFaturasComFiltros(new FaturaFilter { Page = 0, PageSize = 10 });
         return View(faturas);
     }
-    public IActionResult Details()
+    public async Task<IActionResult> Details(int id)
     {
-        return View();
+        var fatura = await _faturaBL.GetFaturaByIdAsync(id);
+        return View(fatura);
     }
-    public IActionResult Edit()
+    public async Task<IActionResult> Edit(int id)
     {
-        return View();
+        var fatura = await _faturaBL.GetFaturaByIdAsync(id);
+        return View(fatura);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(Fatura fatura)
+    {
+        await _faturaBL.UpdateFatura(fatura);
+        return RedirectToAction("Index", "Fatura");
     }
 
 
@@ -44,7 +53,21 @@ public class FaturaController : Controller
         try
         {
             await _faturaBL.AdicionarFatura(fatura);
-            return Ok();
+            return RedirectToAction("Index", "Fatura");
+        }
+        catch (Exception ex)
+        {
+            return RedirectToAction("Index", "Error", new ErrorModel(ex.Message));
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _faturaBL.ExcluirFatura(id);
+            return RedirectToAction("Index", "Fatura");
         }
         catch (Exception ex)
         {
