@@ -60,6 +60,16 @@
                 </tbody>
             </table>
 
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    @for (var i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.Filter.Page ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { Page = i, Model.Filter.Cliente, Model.Filter.DateInitial, Model.Filter.DateFinish })">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
 
             <div class="text-center mt-5">
                 <h3 class="report-title">Relatórios</h3>
@@ -71,16 +81,7 @@
                 </div>
             </div>
 
-            <nav aria-label="Page navigation" class="mt-4">
-                <ul class="pagination justify-content-center">
-                    @for (var i = 1; i <= Model.TotalPages; i++)
-                    {
-                        <li class="page-item @(i == Model.Filter.Page ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("Index", new { Page = i, Model.Filter.Cliente, Model.Filter.DateInitial, Model.Filter.DateFinish })">@i</a>
-                        </li>
-                    }
-                </ul>
-            </nav>
+
 
             <div class="d-flex justify-content-end">
                 <a href="/Fatura/Create" class="btn btn-primary mt-3">Adicionar Nova Fatura</a>
