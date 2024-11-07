@@ -21,6 +21,7 @@ public static class InjecterServices
 
         #region BusinessLayer
         services.AddScoped<FaturaBusinessLayer>();
+        services.AddScoped<RelatorioBusinessLayer>();
         #endregion
     }
 
