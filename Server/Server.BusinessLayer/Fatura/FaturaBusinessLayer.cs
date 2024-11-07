@@ -19,6 +19,16 @@ namespace Server.BusinessLayer
             _faturaItemProvider = faturaItemProvider;
         }
 
+        public async Task<Fatura> GetFaturaByIdAsync(int faturaId)
+        {
+            return await _faturaProvider.Get(faturaId);
+        }
+
+        public async Task UpdateFatura(Fatura fatura)
+        {
+            await _faturaProvider.Update(fatura);
+        }
+
         public async Task AdicionarFatura(Fatura fatura)
         {
             fatura.Data = DateTime.Now;
@@ -60,6 +70,7 @@ namespace Server.BusinessLayer
             if (faturaItem != null)
                 await _faturaItemProvider.Delete(faturaItem);
         }
+
 
     }
 }
