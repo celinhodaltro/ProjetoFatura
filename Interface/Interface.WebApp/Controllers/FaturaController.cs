@@ -2,6 +2,7 @@
 using Server.BusinessLayer;
 using Server.DataAcessObject.Providers;
 using Server.Entities;
+using Server.Entities.Model;
 using System.Threading.Tasks;
 
 public class FaturaController : Controller
@@ -26,6 +27,8 @@ public class FaturaController : Controller
     {
         return View();
     }
+
+
     public IActionResult Create()
     {
         return View();
@@ -36,7 +39,7 @@ public class FaturaController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddFatura(Fatura fatura)
+    public async Task<IActionResult> Create(Fatura fatura)
     {
         try
         {
@@ -45,7 +48,7 @@ public class FaturaController : Controller
         }
         catch (Exception ex)
         {
-            return BadRequest(new { message = ex.Message });
+            return RedirectToAction("Index", "Error", new ErrorModel(ex.Message));
         }
     }
 

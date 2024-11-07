@@ -21,8 +21,9 @@ namespace Server.BusinessLayer
 
         public async Task AdicionarFatura(Fatura fatura)
         {
-            if (!fatura.Validate())
-                throw new Exception("A fatura não é válida.");
+            fatura.Data = DateTime.Now;
+            fatura.Validate();
+
 
             await _faturaProvider.Insert(fatura);
         }

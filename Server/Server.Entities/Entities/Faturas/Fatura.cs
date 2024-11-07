@@ -22,7 +22,7 @@ public class Fatura :DefaultDb
     {
         StringBuilder Result = new("");
 
-        if (this.Cliente is null)
+        if (this.Cliente is null || String.IsNullOrEmpty(this.Cliente))
             Result.Append("O Cliente é obrigatorio;");
 
         var Errors = Result.ToString();
