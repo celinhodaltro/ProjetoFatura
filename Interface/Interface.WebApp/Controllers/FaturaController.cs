@@ -1,12 +1,32 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.BusinessLayer;
+using Server.Entities;
+using System.Threading.Tasks;
 
-namespace Interface.WebApp.Controllers
+[Route("api/[controller]")]
+[ApiController]
+public class FaturaController : ControllerBase
 {
-    public class FaturaController : Controller
+    private readonly FaturaBusinessLayer _faturaBL;
+
+    public FaturaController(FaturaBusinessLayer faturaBL)
     {
-        public IActionResult Index()
+        _faturaBL = faturaBL;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> AddFatura(Fatura fatura)
+    {
+        try
         {
-            return View();
+            await _faturaBL.AdicionarFatura(fatura);
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
         }
     }
+
+
 }
