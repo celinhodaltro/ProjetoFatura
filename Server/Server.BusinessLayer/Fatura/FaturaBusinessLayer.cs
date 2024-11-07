@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Server.DataAcessObject.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,10 @@ namespace Server.BusinessLayer
 {
     public class FaturaBusinessLayer
     {
+        public FaturaItemProvider? FaturaItemProvider { get; set; }
+        public FaturaProvider? FaturaProvider { get; set; }
+
         
+
     }
 }
