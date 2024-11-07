@@ -1,4 +1,5 @@
-﻿using Server.DataAcessObject.Providers;
+﻿using Microsoft.EntityFrameworkCore;
+using Server.DataAcessObject.Providers;
 using Server.Entities;
 using System;
 using System.Collections.Generic;

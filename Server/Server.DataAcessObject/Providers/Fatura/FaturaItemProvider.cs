@@ -5,7 +5,7 @@ namespace Server.DataAcessObject.Providers;
 
 public class FaturaItemProvider : BaseProvider<FaturaItem>
 {
-    public FaturaItemProvider(DbContext context) : base(context) { }
+    public FaturaItemProvider(AppDbContext context) : base(context) { }
 
 
 }

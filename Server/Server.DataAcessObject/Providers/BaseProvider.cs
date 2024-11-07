@@ -9,10 +9,10 @@ using System;
 namespace Server.DataAcessObject.Providers;
 public class BaseProvider<T> where T : class
 {
-    protected readonly DbContext _context;
+    protected readonly AppDbContext _context;
     protected readonly DbSet<T> _dbSet;
 
-    public BaseProvider(DbContext context)
+    public BaseProvider(AppDbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();
