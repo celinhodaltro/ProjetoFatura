@@ -161,7 +161,7 @@ public class FaturaController : Controller
         }
     }
 
-    public async Task<IActionResult> TopFaturas()
+    public async Task<IActionResult> Top10Faturas()
     {
         try
         {
