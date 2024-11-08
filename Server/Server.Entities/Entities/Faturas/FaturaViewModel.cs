@@ -9,6 +9,6 @@ namespace Server.Entities;
 public class FaturasViewModel
 {
     public IEnumerable<Fatura> Faturas { get; set; }
-    public FaturaFilter Filter { get; set; }
-    public int TotalPages { get; set; }
+    public FiltroFatura Filtro { get; set; }
+    public int TotalPaginas { get; set; }
 }

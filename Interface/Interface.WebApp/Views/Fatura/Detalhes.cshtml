@@ -37,7 +37,7 @@
                             <td>@item.Descricao</td>
                             <td>@item.Valor.ToString("C")</td>
                             <td class="text-center">
-                                <form action="/FaturaItem/Delete/@item.Id" method="post" style="display:inline;">
+                                <form action="@Url.Action("Excluir", "FaturaItem", new { item.Id })" method="post" style="display:inline;">
                                     @Html.AntiForgeryToken()
                                     <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                                 </form>
@@ -48,7 +48,7 @@
             </table>
 
             <div class="d-flex justify-content-end">
-                <a href="/Fatura/CreateItem?faturaId=@Model.Id" class="btn btn-success mt-3 me-2">Adicionar Item</a>
+                <a href="@Url.Action("Criar", "FaturaItem", new { FaturaId = Model.Id })" class="btn btn-success mt-3 me-2">Adicionar Item</a>
                 <a href="/Fatura/Index" class="btn btn-secondary mt-3">Voltar</a>
             </div>
         </div>

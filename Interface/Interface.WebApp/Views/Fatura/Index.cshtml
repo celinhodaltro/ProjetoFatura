@@ -15,15 +15,15 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label for="Cliente">Cliente</label>
-                        <input type="text" id="Cliente" name="Cliente" class="form-control" value="@Model.Filter.Cliente" placeholder="Filtrar por Cliente">
+                        <input type="text" id="Cliente" name="Cliente" class="form-control" value="@Model.Filtro.Cliente" placeholder="Filtrar por Cliente">
                     </div>
                     <div class="col-md-3">
                         <label for="DateInitial">Data Inicial</label>
-                        <input type="date" id="DateInitial" name="DateInitial" class="form-control" value="@Model.Filter.DateInitial?.ToString("yyyy-MM-dd")">
+                        <input type="date" id="DateInitial" name="DateInitial" class="form-control" value="@Model.Filtro.DataInicial?.ToString("yyyy-MM-dd")">
                     </div>
                     <div class="col-md-3">
                         <label for="DateFinish">Data Final</label>
-                        <input type="date" id="DateFinish" name="DateFinish" class="form-control" value="@Model.Filter.DateFinish?.ToString("yyyy-MM-dd")">
+                        <input type="date" id="DateFinish" name="DateFinish" class="form-control" value="@Model.Filtro.DataFinal?.ToString("yyyy-MM-dd")">
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
                         <button type="submit" class="btn btn-primary w-100">Aplicar Filtros</button>
@@ -48,9 +48,9 @@
                             <td>@fatura.Cliente</td>
                             <td>@fatura.Data.ToShortDateString()</td>
                             <td class="text-center">
-                                <a href="/Fatura/Details/@fatura.Id" class="btn btn-info btn-sm mx-1">Visualizar</a>
-                                <a href="/Fatura/Edit/@fatura.Id" class="btn btn-warning btn-sm mx-1">Editar</a>
-                                <form action="@Url.Action("Delete", "Fatura", new { id = fatura.Id })" method="post" style="display:inline;">
+                                <a href="/Fatura/Detalhes/@fatura.Id" class="btn btn-info btn-sm mx-1">Visualizar</a>
+                                <a href="/Fatura/Editar/@fatura.Id" class="btn btn-warning btn-sm mx-1">Editar</a>
+                                <form action="@Url.Action("Excluir", "Fatura", new { id = fatura.Id })" method="post" style="display:inline;">
                                     @Html.AntiForgeryToken()
                                     <button type="submit" class="btn btn-danger btn-sm mx-1">Excluir</button>
                                 </form>
@@ -62,10 +62,10 @@
 
             <nav aria-label="Page navigation" class="mt-4">
                 <ul class="pagination justify-content-center">
-                    @for (var i = 1; i <= Model.TotalPages; i++)
+                    @for (var i = 1; i <= Model.TotalPaginas; i++)
                     {
-                        <li class="page-item @(i == Model.Filter.Page ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("Index", new { Page = i, Model.Filter.Cliente, Model.Filter.DateInitial, Model.Filter.DateFinish })">@i</a>
+                        <li class="page-item @(i == Model.Filtro.Pagina ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { Page = i, Model.Filtro.Cliente, Model.Filtro.DataInicial, Model.Filtro.DataFinal })">@i</a>
                         </li>
                     }
                 </ul>
@@ -74,8 +74,8 @@
             <div class="text-center mt-5">
                 <h3 class="report-title">Relatórios</h3>
                 <div class="d-flex justify-content-center mt-3">
-                    <a href="@Url.Action("RelatorioPorCliente", "Fatura", new { Cliente = Model.Filter.Cliente })" class="btn btn-success mx-2">Total por Cliente</a>
-                    <a href="@Url.Action("RelatorioPorAnoMes", "Fatura", new { DateInitial = Model.Filter.DateInitial, DateFinish = Model.Filter.DateFinish })" class="btn btn-success mx-2">Total por Ano/Mês</a>
+                    <a href="@Url.Action("RelatorioPorCliente", "Fatura", new { Cliente = Model.Filtro.Cliente })" class="btn btn-success mx-2">Total por Cliente</a>
+                    <a href="@Url.Action("RelatorioPorAnoMes", "Fatura", new { DateInicial = Model.Filtro.DataInicial, DateFinal = Model.Filtro.DataFinal})" class="btn btn-success mx-2">Total por Ano/Mês</a>
                     <a href="@Url.Action("Top10Faturas", "Fatura")" class="btn btn-success mx-2">Top 10 Faturas</a>
                     <a href="@Url.Action("Top10Itens", "Fatura")" class="btn btn-success mx-2">Top 10 Maiores Itens</a>
                 </div>
@@ -84,7 +84,7 @@
 
 
             <div class="d-flex justify-content-end">
-                <a href="/Fatura/Create" class="btn btn-primary mt-3">Adicionar Nova Fatura</a>
+                <a href="/Fatura/Criar" class="btn btn-primary mt-3">Adicionar Nova Fatura</a>
             </div>
         </div>
     </div>

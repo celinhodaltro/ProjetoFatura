@@ -5,101 +5,106 @@ namespace Server.DataAcessObject.Providers;
 
 public class FaturaProvider : BaseProvider<Fatura>
 {
-    public FaturaProvider(AppDbContext context) : base(context) { }
+    public FaturaProvider(AppDbContext contexto) : base(contexto) { }
 
-    public async Task<Fatura> GetFaturaWithItens(int faturaId)
+    public async Task<Fatura> ObterFaturas(int faturaId)
     {
-        var result = await _dbSet
+        var resultado = await _dbSet
             .Include(f => f.FaturaItem)
             .FirstOrDefaultAsync(f => f.Id == faturaId);
 
-        if (result is null)
+        if (resultado is null)
             return new Fatura();
 
-        return result;
+        return resultado;
     }
 
-    public async Task<List<Fatura>> BuscarFaturasComFiltros(FaturaFilter Filter)
+    public async Task<int> ObterFaturaIdPorFaturaItemId(int faturaItemId)
     {
-        IQueryable<Fatura> query = _dbSet;
+        var resultadoId = await this._context.FaturaItem.FirstOrDefaultAsync(x => x.Id == faturaItemId);
 
-        if (!string.IsNullOrEmpty(Filter.Cliente))
-            query = query.Where(f => f.Cliente.Contains(Filter.Cliente));
-
-
-        if (Filter.DateInitial.HasValue)
-            query = query.Where(f => f.Data >= Filter.DateInitial.Value);
-
-        
-        if (Filter.DateFinish.HasValue)
-            query = query.Where(f => f.Data <= Filter.DateFinish.Value);
-        
-        if (Filter is { PageSize:>0})
-            query = query.Skip((Filter.Page - 1) * Filter.PageSize).Take(Filter.PageSize);
-        
-
-        return await query.ToListAsync();
+        return resultadoId?.FaturaId ?? 0;
     }
 
-    public async Task<int> CountFaturasComFiltros(FaturaFilter filter)
+
+    public async Task<List<Fatura>> BuscarFaturasComFiltros(FiltroFatura filtro)
     {
-        var query = _context.Fatura.AsQueryable();
+        IQueryable<Fatura> consulta = _dbSet;
 
-        if (!string.IsNullOrEmpty(filter.Cliente))
+        if (!string.IsNullOrEmpty(filtro.Cliente))
+            consulta = consulta.Where(f => f.Cliente.Contains(filtro.Cliente));
+
+        if (filtro.DataInicial.HasValue)
+            consulta = consulta.Where(f => f.Data >= filtro.DataInicial.Value);
+
+        if (filtro.DataFinal.HasValue)
+            consulta = consulta.Where(f => f.Data <= filtro.DataFinal.Value);
+
+        if (filtro is { TamanhoPagina: > 0 })
+            consulta = consulta.Skip((filtro.Pagina - 1) * filtro.TamanhoPagina).Take(filtro.TamanhoPagina);
+
+        return await consulta.ToListAsync();
+    }
+
+    public async Task<int> ContarFaturasComFiltros(FiltroFatura filtro)
+    {
+        var consulta = _context.Fatura.AsQueryable();
+
+        if (!string.IsNullOrEmpty(filtro.Cliente))
         {
-            query = query.Where(f => f.Cliente.Contains(filter.Cliente));
+            consulta = consulta.Where(f => f.Cliente.Contains(filtro.Cliente));
         }
 
-        if (filter.DateInitial.HasValue)
+        if (filtro.DataInicial.HasValue)
         {
-            query = query.Where(f => f.Data >= filter.DateInitial.Value);
+            consulta = consulta.Where(f => f.Data >= filtro.DataInicial.Value);
         }
 
-        if (filter.DateFinish.HasValue)
+        if (filtro.DataFinal.HasValue)
         {
-            query = query.Where(f => f.Data <= filter.DateFinish.Value);
+            consulta = consulta.Where(f => f.Data <= filtro.DataFinal.Value);
         }
 
-        return await query.CountAsync();
+        return await consulta.CountAsync();
     }
 
     public async Task<IEnumerable<RelatorioCliente>> GerarRelatorioPorCliente(string cliente)
     {
-        var query = _context.Fatura.AsQueryable();
+        var consulta = _context.Fatura.AsQueryable();
 
         if (!string.IsNullOrEmpty(cliente))
         {
-            query = query.Where(f => f.Cliente.Contains(cliente));
+            consulta = consulta.Where(f => f.Cliente.Contains(cliente));
         }
 
-        var relatorio = await query
+        var relatorio = await consulta
             .GroupBy(f => f.Cliente)
             .Select(g => new RelatorioCliente
             {
                 Cliente = g.Key,
                 TotalFaturas = g.Count(),
-                TotalValor = g.Sum(f => f.FaturaItem.Select(x=>x.Valor).Sum())
+                TotalValor = g.Sum(f => f.FaturaItem.Select(x => x.Valor).Sum())
             })
             .ToListAsync();
 
         return relatorio;
     }
 
-    public async Task<IEnumerable<RelatorioAnoMes>> GerarRelatorioPorAnoMes(DateTime? dateInitial, DateTime? dateFinish)
+    public async Task<IEnumerable<RelatorioAnoMes>> GerarRelatorioPorAnoMes(DateTime? dataInicial, DateTime? dataFinal)
     {
-        var query = _context.Fatura.AsQueryable();
+        var consulta = _context.Fatura.AsQueryable();
 
-        if (dateInitial.HasValue)
+        if (dataInicial.HasValue)
         {
-            query = query.Where(f => f.Data >= dateInitial.Value);
+            consulta = consulta.Where(f => f.Data >= dataInicial.Value);
         }
 
-        if (dateFinish.HasValue)
+        if (dataFinal.HasValue)
         {
-            query = query.Where(f => f.Data <= dateFinish.Value);
+            consulta = consulta.Where(f => f.Data <= dataFinal.Value);
         }
 
-        var relatorio = await query
+        var relatorio = await consulta
             .GroupBy(f => new { f.Data.Year, f.Data.Month })
             .Select(g => new RelatorioAnoMes
             {
@@ -116,24 +121,20 @@ public class FaturaProvider : BaseProvider<Fatura>
     public async Task<IEnumerable<Fatura>> GerarTopFaturas(int quantidadeDeFaturas)
     {
         var topFaturas = await _context.Fatura.Include(x => x.FaturaItem)
-            .OrderByDescending(f => f.FaturaItem.Select(x=> x.Valor).Sum())
+            .OrderByDescending(f => f.FaturaItem.Select(x => x.Valor).Sum())
             .Take(quantidadeDeFaturas)
             .ToListAsync();
 
         return topFaturas;
     }
 
-    public async Task<IEnumerable<FaturaItem>> GerarTopItens(int quantidadeDeItems)
+    public async Task<IEnumerable<FaturaItem>> GerarTopItens(int quantidadeDeItens)
     {
         var topItens = await _context.FaturaItem
             .OrderByDescending(i => i.Valor)
-            .Take(quantidadeDeItems)
+            .Take(quantidadeDeItens)
             .ToListAsync();
 
         return topItens;
     }
-
-
-
-
 }

@@ -11,7 +11,7 @@
         </div>
 
         <div class="card-body">
-            <form asp-action="CreateItem" method="post">
+            <form asp-action="Criar" method="post">
                 <input type="hidden" asp-for="FaturaId" />
 
                 <div class="form-group mb-3">
@@ -34,7 +34,7 @@
 
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-success">Adicionar Item</button>
-                    <a href="/Fatura/Details/@Model.FaturaId" class="btn btn-secondary">Cancelar</a>
+                    <a href="@Url.Action("Detalhes", "Fatura", new { Id = Model.FaturaId })" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>

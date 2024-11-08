@@ -19,12 +19,16 @@ namespace Server.BusinessLayer
             _faturaItemProvider = faturaItemProvider;
         }
 
-        public async Task<Fatura> GetFaturaByIdAsync(int faturaId)
+        public async Task<Fatura> ObterFaturas(int faturaId)
         {
-            return await _faturaProvider.GetFaturaWithItens(faturaId);
+            return await _faturaProvider.ObterFaturas(faturaId);
+        }
+        public async Task<int> ObterFaturasPorFaturaItemId(int faturaItemId)
+        {
+            return await _faturaProvider.ObterFaturaIdPorFaturaItemId(faturaItemId);
         }
 
-        public async Task UpdateFatura(Fatura fatura)
+        public async Task AtualizarFatura(Fatura fatura)
         {
             await _faturaProvider.Update(fatura);
         }
@@ -44,7 +48,7 @@ namespace Server.BusinessLayer
             _faturaItemProvider.Insert(item);
         }
 
-        public async Task<List<Fatura>> BuscarFaturasComFiltros(FaturaFilter Filter)
+        public async Task<List<Fatura>> BuscarFaturasComFiltros(FiltroFatura Filter)
         {
             var resultado = await _faturaProvider.BuscarFaturasComFiltros(Filter);
             if (resultado is { Count: 0 })
@@ -53,9 +57,9 @@ namespace Server.BusinessLayer
                 return resultado;
         }
 
-        public async Task<int> CountFaturasComFiltros(FaturaFilter Filter)
+        public async Task<int> ContarFaturasComFiltros(FiltroFatura Filter)
         {
-            return await _faturaProvider.CountFaturasComFiltros(Filter);
+            return await _faturaProvider.ContarFaturasComFiltros(Filter);
         }
 
         public async Task ExcluirFatura(int faturaId)
