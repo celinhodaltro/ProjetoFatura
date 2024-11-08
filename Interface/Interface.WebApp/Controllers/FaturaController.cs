@@ -161,11 +161,11 @@ public class FaturaController : Controller
         }
     }
 
-    public async Task<IActionResult> Top10Faturas()
+    public async Task<IActionResult> TopFaturas()
     {
         try
         {
-            var topFaturas = await _faturaBL.GerarTop10Faturas();
+            var topFaturas = await _faturaBL.GerarTopFaturas(10);
             var file = _relatorioBL.GerarExcelTop10Faturas(topFaturas);
             return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Top10_Faturas.xlsx");
         }
