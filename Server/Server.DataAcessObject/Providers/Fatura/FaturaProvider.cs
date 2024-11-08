@@ -7,7 +7,7 @@ public class FaturaProvider : BaseProvider<Fatura>
 {
     public FaturaProvider(AppDbContext contexto) : base(contexto) { }
 
-    public async Task<Fatura> ObterFaturas(int faturaId)
+    public async Task<Fatura> ObterFatura(int faturaId)
     {
         var resultado = await _dbSet
             .Include(f => f.FaturaItem)

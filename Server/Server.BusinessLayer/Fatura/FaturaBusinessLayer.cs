@@ -19,17 +19,20 @@ namespace Server.BusinessLayer
             _faturaItemProvider = faturaItemProvider;
         }
 
-        public async Task<Fatura> ObterFaturas(int faturaId)
+        public async Task<Fatura> ObterFatura(int faturaId)
         {
-            return await _faturaProvider.ObterFaturas(faturaId);
+            return await _faturaProvider.ObterFatura(faturaId);
         }
         public async Task<int> ObterFaturasPorFaturaItemId(int faturaItemId)
         {
             return await _faturaProvider.ObterFaturaIdPorFaturaItemId(faturaItemId);
         }
 
-        public async Task AtualizarFatura(Fatura fatura)
+        public async Task AtualizarFatura(Fatura faturaParaAtualizar)
         {
+            faturaParaAtualizar.Validate();
+            var fatura = await _faturaProvider.ObterFatura(faturaParaAtualizar.Id);
+            fatura.Cliente = faturaParaAtualizar.Cliente;
             await _faturaProvider.Update(fatura);
         }
 

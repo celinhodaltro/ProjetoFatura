@@ -30,7 +30,7 @@ public class Fatura :DefaultDb
         if (String.IsNullOrEmpty(Errors))
             return true;
         else
-            throw new InvalidDataException(Result.ToString());
+            throw new ArgumentException(Result.ToString());
     }
 
 }

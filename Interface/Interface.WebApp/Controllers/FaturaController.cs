@@ -45,13 +45,13 @@ public class FaturaController : Controller
 
     public async Task<IActionResult> Detalhes(int id)
     {
-        var fatura = await _faturaBL.ObterFaturas(id);
+        var fatura = await _faturaBL.ObterFatura(id);
         return View(fatura);
     }
 
     public async Task<IActionResult> Editar(int id)
     {
-        var fatura = await _faturaBL.ObterFaturas(id);
+        var fatura = await _faturaBL.ObterFatura(id);
         return View(fatura);
     }
 

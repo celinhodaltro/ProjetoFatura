@@ -65,7 +65,7 @@
                     @for (var i = 1; i <= Model.TotalPaginas; i++)
                     {
                         <li class="page-item @(i == Model.Filtro.Pagina ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("Index", new { Page = i, Model.Filtro.Cliente, Model.Filtro.DataInicial, Model.Filtro.DataFinal })">@i</a>
+                            <a class="page-link" href="@Url.Action("Index", new { Pagina = i, Model.Filtro.Cliente, Model.Filtro.DataInicial, Model.Filtro.DataFinal })">@i</a>
                         </li>
                     }
                 </ul>

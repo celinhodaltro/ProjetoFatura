@@ -11,7 +11,7 @@
         </div>
 
         <div class="card-body">
-            <form asp-action="Criar" method="post">
+            <form asp-action="Criar" method="post" id="formFaturaItem">
                 <input type="hidden" asp-for="FaturaId" />
 
                 <div class="form-group mb-3">
@@ -28,15 +28,30 @@
 
                 <div class="form-group mb-3">
                     <label for="Valor">Valor</label>
-                    <input asp-for="Valor" class="form-control" placeholder="Ex: 100.00" />
+                    <input asp-for="Valor" class="form-control" placeholder="Ex: 100.00" id="valorInput" />
                     <span asp-validation-for="Valor" class="text-danger"></span>
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
-                    <button type="submit" class="btn btn-success">Adicionar Item</button>
+                    <button type="button" class="btn btn-success" onclick="confirmarValor()">Adicionar Item</button>
                     <a href="@Url.Action("Detalhes", "Fatura", new { Id = Model.FaturaId })" class="btn btn-secondary">Cancelar</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    function confirmarValor() {
+        var valor = parseFloat(document.getElementById("valorInput").value);
+
+        if (valor > 100) {
+            var confirmacao = confirm("O valor é superior a 100. Tem certeza que deseja adicionar este item?");
+            if (confirmacao) {
+                document.getElementById("formFaturaItem").submit();
+            }
+        } else {
+            document.getElementById("formFaturaItem").submit();
+        }
+    }
+</script>

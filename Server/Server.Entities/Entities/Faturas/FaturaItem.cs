@@ -39,12 +39,15 @@ public class FaturaItem :DefaultDb
         if (this.Descricao is { Length: > 20 })
             Result.Append("Descrição deve ser inferior á 20 caracteres;");
 
+        if (this.Valor < 0)
+            Result.Append("Valor deve ser positivo;");
+
         var Errors = Result.ToString();
 
         if (String.IsNullOrEmpty(Errors))
             return true;
         else
-            throw new InvalidDataException(Result.ToString());
+            throw new ArgumentException(Result.ToString());
     }
 
 
