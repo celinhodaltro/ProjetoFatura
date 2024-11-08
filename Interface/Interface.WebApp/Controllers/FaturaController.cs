@@ -179,7 +179,7 @@ public class FaturaController : Controller
     {
         try
         {
-            var topItens = await _faturaBL.GerarTop10Itens();
+            var topItens = await _faturaBL.GerarTopItens(10);
             var file = _relatorioBL.GerarExcelTop10Itens(topItens);
             return File(file, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Top10_Itens.xlsx");
         }

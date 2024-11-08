@@ -81,14 +81,14 @@ namespace Server.BusinessLayer
             return await _faturaProvider.GerarRelatorioPorAnoMes(dateInitial, dateFinish);
         }
 
-        public async Task<IEnumerable<Fatura>> GerarTopFaturas(int quantidade)
+        public async Task<IEnumerable<Fatura>> GerarTopFaturas(int quantidadeDeFaturas)
         {
-            return await _faturaProvider.GerarTopFaturas(quantidade);
+            return await _faturaProvider.GerarTopFaturas(quantidadeDeFaturas);
         }
 
-        public async Task<IEnumerable<FaturaItem>> GerarTop10Itens()
+        public async Task<IEnumerable<FaturaItem>> GerarTopItens(int quantidadeDeItems)
         {
-            return await _faturaProvider.GerarTop10Itens();
+            return await _faturaProvider.GerarTopItens(quantidadeDeItems);
         }
 
 

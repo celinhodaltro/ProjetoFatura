@@ -113,21 +113,21 @@ public class FaturaProvider : BaseProvider<Fatura>
         return relatorio;
     }
 
-    public async Task<IEnumerable<Fatura>> GerarTopFaturas(int quantidade)
+    public async Task<IEnumerable<Fatura>> GerarTopFaturas(int quantidadeDeFaturas)
     {
         var topFaturas = await _context.Fatura
             .OrderByDescending(f => f.FaturaItem.Select(x=> x.Valor).Sum())
-            .Take(quantidade)
+            .Take(quantidadeDeItems)
             .ToListAsync();
 
         return topFaturas;
     }
 
-    public async Task<IEnumerable<FaturaItem>> GerarTop10Itens()
+    public async Task<IEnumerable<FaturaItem>> GerarTopItens(int quantidadeDeItems)
     {
         var topItens = await _context.FaturaItem
             .OrderByDescending(i => i.Valor)
-            .Take(10)
+            .Take(quantidadeDeItems)
             .ToListAsync();
 
         return topItens;
